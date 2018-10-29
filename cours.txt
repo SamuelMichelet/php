@@ -1,0 +1,489 @@
+****** PHP ******
+
+- Pour fonctionner, le language PHP a besoin d'un serveur web et ne peut être lu directement dans le navigateur.
+- Il ne sera interprêté que dans des fichiers .php (on oublie complètement les fichiers .html)
+- Le code PHP doit être écrit dans une balise PHP. Ex :
+<?php //code php ici ?>
+
+- PHP peut afficher du texte avec la fonction echo. Ex : <?php echo 'Ecrit avec PHP'; ?>
+
+- Commentaires PHP :
+
+// Commentaire une ligne
+
+/*
+    Commentaire
+    multi-ligne
+*/
+
+- Comme les autres languages, il faut indenter son code
+
+- Voir la configuration du PHP installé : <?php phpinfo(); ?>
+
+- Site officiel de php : php.net
+
+*** Variables ***
+
+- Une variable est un "espace mémoire" dans lequel on met une information. Chaque variable a un nom, une valeur et un type.
+
+Types des variables : 
+
+- int (entier)
+- float (decimaux)
+- booléen (true / false)
+- NULL (variable null)
+- string (chaîne de caractère)
+
+
+- array (tableau)
+- objet
+- class
+
+Chaque variable en PHP doit être écrite avec un $ devant le nom.
+Convention de nommage : lower camel case. Ex : $titreDeLaPage
+Jamais de de caractères spéciaux et accentués.
+Jamais de chiffre en première caractère après le $
+
+
+*** Opérateurs arithmétiques ***
+    - +, -, *, /, %
+
+*** Concaténation ***
+
+    - def : coller deux éléments ensemble
+    - Concaténation avec un "."
+
+*** Raccourcis d'incrémentations / décrémentation ***
+
+$var = $var + 10; peut également s'écrire $var += 10; (fonctionne pour tous les opérateurs : -=, +=, *=, /=, %=, .=)
+
+$var = $var + 1; peut s'écrire $var++;
+
+
+Attention au sens de l'incrémentation (préfixe ou suffixe)
+
+$var1 = 50;
+$var2 = 50;
+
+$result = $var1++;   // result contient 50 car l'incrémentation est faite après le calcul
+$result = ++$var2;   // result contient 51 car l'incrémentation est faite avant le calcul
+
+
+
+*** Les conditions ***
+
+    - Une condition sert à executer du code uniquement si une condition est vrai.
+
+    - Opérateurs de comparaison :
+        - == --> est égal à
+        - <= --> est plus petit ou égal à
+        - >= --> est plus grand ou égal à
+        - != --> est différend de
+        - < --> est plus petit que
+        - > --> est plus grand que
+        - === --> valeur et type égal à
+        - !== --> valeur ou type différent de
+
+    - Opérateurs logiques :
+        - && --> ET
+        - || --> OU
+        - XOR --> OU exclusif
+        - ! --> NON
+
+    - else : permet d'executer du code si la condition est fausse.
+
+        $var = 60;
+
+        if($var < 10){
+            echo 'vrai';    // ne sera pas affiché
+        } else {
+            echo 'faux';    // sera affiché
+        }
+    - Pour échapper un caractère dans une chaîne de text, on y met un antislash devant
+
+    - elseif : permet de faire plus de condition que juste avec un if et un else. Ex :
+
+    $age = 90;
+
+    if($age < 16){
+        echo 'Vous avez moins de 16 ans !';
+    } elseif($age >= 16 && $age < 80) {
+        echo 'Vous avez entre 16 et 80 ans !';
+    } else {
+        echo 'Vous être trop vieux !';  // sera affiché
+    }
+
+
+*** Les boucles ***
+
+    - Une boucle sert à répéter une ou des actions tant qu'une condition est vrai. Ex :
+    
+    $i = 0; // Initialisation d'un compteur (itérateur) à 0
+
+    while($i < 5000){   // tant que l'itérateur est plus petit que 5000, la boucle se répétera
+        echo 'Bonjour ! <br>';
+        $i++;   // Incrémentation du compteur, sinon boucle infinie
+    }
+
+
+    - do while : contrairement à while, même si l'expression est fausse, le code dans la boucle est lu au moins une fois. Ex :
+
+    $var = false;
+
+    do{
+        echo 'ok';  // sera affiché une fois même si $var contient false.
+    } while($var == true);
+
+    - boucle for : boucle qui regorupe le principe d'une boucle while avec un itérateur. Tous les paramètres de l'itérateur et la condition de la boucle se trouvent dans le for(). Ex :
+
+    for($i = 0; $i < 5000; $i++){
+        echo 'bonjour ! <br>';
+    }
+
+    - pour stopper une boucle, il suffit de faire appel à break;
+
+
+*** Les tableaux PHP ***
+
+Il existe 2 types d'array en PHP: les arrays numérotés et associatifs.
+
+Les arrays numérotés contiennent des éléments listé par numéro, commençant toujours par zéro. Ex :
+
+$cities = array('Paris', 'Lyon');
+echo $cities[0];    // affichera Paris
+
+    - Il existe une boucle particulière spécifique aux tableaux: foreach. Ex :
+
+
+$names = array('bob', 'alice', 'pierre);
+foreach($names as $name){
+    echo $name; // Tant qu'il y a des prénoms dans le tableau $names, la boucle continuera à s'executer et à extraire un prénom.
+}
+
+
+Les tableaux associatifs sont comme les tableaux numéroté sauf qu'on choisit nous même la "clé" permettant de retrouver chaque information qu'il contient. Ex :
+
+$userInfos = array(
+    'age' => 26,
+    'name' => 'Jean',
+    'city' => 'Autun'
+);
+
+echo $userInfos['city'];    // Affiche "Autun"
+
+
+    - Liste de fonctions utiles en PHP en lien avec les arrays :
+        - count($x) = retourne le nombre d'entrées dans le tableau x
+        - is_array($x) = retourne true si x est un tableau
+        - array_key_exists('cle', $x) = retourne true si la clé demandée existe dans le tableau x
+        - in_array('valeur', $x) = retourne true si la valeur demandée existe dans le tableau x
+        - print_r($x) = affiche le contenu d'un tableau (outils pour developpeur)
+        array_unshift($x, 'nouvelle valeur') = ajoute une nouvelle entrée au début du tableau et renumérote correctement toutes les entrées à partir de 0.
+        - array_shift($x) = supprime la première entrée du tableau et renumérote les autres à partir de 0
+        - array_pop($x) = supprime la dernière entrée du tableau
+
+
+*** Fonctions ***
+
+    - Une fonction s'utilise toujours en mettant le nom de cette dernière suivi d'une paire de parenthèse. Dans ces parenthèses on y mettra les éventuels paramètres de la fonction.
+
+    - Fonctions natives de PHP :
+        * Fonctions de test de type :
+            - is_int(x) = retourne true si x est de type int
+            - is_float(x) = retourne true si x est un type float
+            - is_numeric(x) = retourne true si la valeur de x est numérique
+            - is_string(x) = retourne true si x est une chaîne de text
+            - is_bool(x) = retourne true si x est de type booléen
+        
+        * Fonctions de test d'existance :
+            - isset($x) = retourne true si la variable $x existe bien
+            - empty($x) = retourne true si la variablez $x est vide
+        
+        * unset($x) : détruit une variable
+
+        * Fonctions sur chaînes de text :
+            - strlen($x) = retourne le nombre de caractères (attention compte mal les caractères spéciaux, il vaux mieux tout le temps utiliser mb_strlen() à la place)
+            - str_replace(x, y, z) = remplace toutes les occurances de x dans z par y
+            - str_ireplace(x, y, z) = idem mais insensible à la casse (majuscules)
+            - mb_strtoupper(x) = change les caractères de x en majuscules
+            - mb_strtolower(x) = change les caractères de x en minuscules
+
+    - Créer ses propres fonctions PHP :
+
+        * Il ne faut jamais créer une fonction avec un nom déjà pris par une autre
+
+        * Création d'une fonction :
+
+            function triple($nb){   // $nb est un paramètre qui recevra le nombre passé dans les parenthèses.
+                return $nb * 3;
+            }
+
+            echo triple(10);    // La fonction renvoi 30 qui est ensuite affiché par le echo
+
+        * Return stop la fonction et tous les codes écrits après ne seront jamais lus
+        * Les variables dans une fonctions ne sont pas accessibles depuis l'exterieur : ce sont des variables locales.
+        * Les variables extérieures ne sont pas accessible depuis l'intérieur  : ce sont des variables globales.
+
+        * Une fonction peut avoir plusieurs paramètres. Si plusieurs paramètres sont attendus, il faut tous les renseigner, sinon il y aura une erreur PHP, sauf si on donne une valeur par défaut au paramètre. Ex :
+
+        function displayArray($array, $color = 'black'){
+            echo '<pre style="color:' . $color . ';">';
+            print_r($array);
+            echo '</pre>';
+        }
+
+        $test = array(1,2,3);
+
+        displayArray($test);   // pas de 2eme paramètre, donc le tableau sera affiché en noir
+        displayArray($test, 'red');    // Cette fois tableau affiché en rouge
+
+*** Erreurs et debugage ***
+
+    - var_dump(x) = affiche des infos sur x (x peut être une variable, un retour de fonction, etc..)
+    - Niveaux d'erreurs :
+        * Notice : erreur qui ne stop pas le code
+        * Warning : erreur qui ne stop pas le code (plus grave)
+        * Error : erreur qui stop le code (le plus grave)
+    - Désactiver affichage des erreurs PHP sur le site :
+        * chercher la ligne "display_errors=On" dans le fichier php.ini et passer à Off. (ne pas oublier de redémarer le serveur web pour prendre en compte)
+        * pour afficher tous les types d'erreurs, chercher la ligne "error_reporting" et bien mettre "error_reporting=E_ALL"
+    - Provoquer une erreur PHP personnalisée :
+        * trigger_error('Message de l\'erreur', E_USER_ERROR); (E_USER_NOTICE, E_USER_WARNING, E_USER_ERROR)
+    - Stopper le chargement de la page :
+        * die('message affiché à l'écran'); (le message est optionnel.)
+        * exit(); (même chose que die, c'est un alias)
+
+*** Codes HTTP ***
+
+    - Codes 200 : Page chargée avec succès
+    - Codes 300 : Redirections
+    - Codes 400 : Erreurs clients
+        * 404 : page introuvable
+        * 403 : accès refusé
+    - Code 500 : Erreurs serveur
+
+*** Les dates ***
+
+    - fonction date(''); permet de générer une date au format demandé en paramètre (se référer au tableau sur php.net)
+    - fonction strftime(''); permet de générer une date dans n'importe quelle langue au format en paramètre (se référer au tableau sur php.net)
+    - Définir la langue utilisée par strftime : setlocale(LC_TIME, 'fr_FR.utf8', 'fra'); bug sous windows, mais fonctionne correctement sous linux et mac
+    - fonction time() = permet de récupérer le timestamp de la date actuelle (timestamp = date en version numérique, c'est à dire nombre de secondes écoulées depuis le 1er janvier 1970)
+    -date() et strftime() peuvent prendre un timestamp en second paramètre après le format pour afficher une date précise.
+    - strtotime('2018-11-19 03:48:25'); --> convertion d'une date textuelle en timestamp
+
+    - Objet DateTime :
+
+    $newDate = New DateTime('+6 days + 50 minutes'); // création d'une nouvelle date (date actuelle + 6 jours et 50 minutes).
+
+    echo $newDate->format('Y-m-d H:i:s');  // Affichage de la date sous un format donné (idem que la fonction date() )
+
+    $newDate->modify('-5 hours');  // Modifie la date pour lui enlever 5 heures
+
+    $newDate->setDate('2010', '6', $newDate->format('d'));    // Change l'année et le mois de la date en laissant le même jour.
+
+    $newDate->setTime('12', $newDate->format('i'), '45');    // Change l'heure et les secondes de la date en laissant les minutes.
+
+    * Pour créer une variable contenant une copie d'une date d'une autre variable, il faut ajouter le mot "clone" Ex :
+
+    $date = new DateTime();
+    $date2 = clone $date;   // Ici $date et $date2 sont bien 2 variables différente avec leur date propre chacune
+
+
+*** Inclusions ***
+
+    - Il est possible d'inclure le contenu d'un fichier PHP dans un autre grâces aux inclusions
+        * include('page.php'); --> inclusion du contenu de "fichier.php".
+        * include_once('page.php'); --> Inclusion comme include sauf si le fichier a déjà été inclu une fois avant.
+        * require('page.php'); --> inclusion identique à include sauf en cas d'erreur: un include provoquera toujours une erreur de type WARNING alors qu'un require provoquera toujours une erreur de type ERROR
+        * require_once('page.php'); --> Inclusion comme require sauf si le fichier a déjà été inclu une fois avant.
+
+*** Variables superglobales ***
+
+    - SERVER :
+        * $_SERVER['REMOTE_ADDR']   // Adresse ip du client
+        * $_SERVER['SERVER_NAME']   // Nom du serveur
+        * $_SERVER['DOCUMENT_ROOT']   // Chemin du dossier web sur le système du serveur
+        * $_SERVER['PHP_SELF']   // Partie de l'url après le nom de domaine
+        * $_SERVER['HTTP_USER_AGENT']   // Infos sur l'utilisateur
+        * $_SERVER['HTTP_REFERER']   // Page précédente visitée par le client
+
+    - GET
+        * La superglobale $_GET est remplie automatiquement par PHP avec les variables passée dans l'url.
+        * Pour faire passer des variables dans l'url, la syntaxe est la suivante :
+            - page.php?var1=xxx&var2=yyyy
+        * Les formulaires HTML utilisant la méthode GET peuvent créer des variables dans l'url avec les informations passées dans ses champs de saisi. (Attention chaque champ doit avoir un attribut name="")
+        * Inconvénients d'utiliser les variables dans l'url :
+            - Visible dans l'url directement (pas de données sensibles)
+            - Taille limitée de l'url (ça dépend du navigateur)
+        * Il ne faut jamais afficher le contenu d'une variable venant d'un formulaire sans le protéger contre les balises html, sinon il y a risque de pouvoir executer du javascript, ce qui est extrêmement dangereux (vol des cookies, modification du DOM, etc..). Cette faille de sécurité s'appelle faille XSS (Cross Site Scripting).
+        Pour se protéger : htmlspecialchars(x), htmlentities(x), strip_tags(x)
+    - POST
+        * le fonctionnement est identique que pour GET sauf pour le moyen de transport : Les données POST ne sont pas dans l'url.
+        * avantages :
+            - sécurité visuelle (pas visible dans l'url)
+            - beaucoup moins limité sur la quantité et la taille des variables que GET
+        * inconveniants :
+            - Pas de sauvegarde d'état d'une page (par exemple je ne pourrait pas conserver dans l'url une recherche google si c'était en POST)
+
+    - COOKIE
+        * Un cookie est une variable stockée dans le navigateur du client.
+        * Un cookie est disponible sur toutes les pages du site et permet de garder des variables en mémoire sur le long terme.
+        * Un cookie a un nom, un type, une valeur, une date d'expiration et des paramètres optionnels
+        * Étant stocké sur le navigateur du client, ne jamais stocker dedans des données confidentielles ou sensibles.
+        * Tous les cookies sont accessibles dans PHP dans la superglobale $_COOKIE.
+        * Toute création doit être faite avant l'envoi de tout code HTML.
+        * Création d'un cookie : setcookie('nom', 'valeur', time() + 3600, null, null, false, true);
+        * Destruction d'un cookie : setcookie('nom'); --> sans date d'expiration, le cookie va être immédiatement détruit.
+
+    - SESSION
+        * Comme les cookies, les sessions servent à stocker des variables et les garder en mémoire mais côté serveur.
+        * Une session est ratachée à un client via un cookie spéciale créé automatiquement par PHP: le cookie PHPSESSID. Si ce cookie est volé, il est possible d'accèder par exemple au compte de quelqu'un sans même connaître le mot de passe.
+        * Pour travailler avec les sessions, il faut obligatoirement appeler la fonction session_start(); au début du fichier avant l'envoi de tout code html
+        * il est possible de réinitialiser une session en appelant la fonction session_destroy()
+        * Attention à ne jamais mettre de caractères avant la balise d'ouverture PHP avant session_start(), il est déconseillé de le faire même si ça fonctionne parfois grâce à l'output_buffering paramètrable dans php.ini
+        * Une session possède 2 durées de vie :
+            - La durée de vie du cookie PHPSESSID
+                * Paramétrable dans php.ini : session.cookie_lifetime (0 = jusqu'à fermeture du navigateur)
+            - La durée de vie du fichier de session côté serveur
+                * Paramétrable dans php.ini : session.gc_maxlifetime
+
+*** Filtres de validation ***
+
+    - Un filtre permet de vérifier si une chaîne de texte est valide par rapport au filtre. Ex : on peut vérifier si 'fsdglmjsdfgj' est une adresse email valide.
+    - Tous les filtres s'utilisent avec filter_var(x, y) qui retournera false si 'x' ne respecte pas le filtre 'y'.
+    - filtres existants :
+        * FILTER_VALIDATE_EMAIL --> vérifie si c'est un format d'email valide.
+        * FILTER_VALIDATE_IP --> vérifie si c'est une adresse IP valide (ipv4 ou ipv6)
+        * FILTER_VALIDATE_URL --> vérifie si c'est une adresse URL valide
+        * FILTER_VALIDATE_INT --> vérifie si la valeur est bien un entier
+        * FILTER_VALIDATE_FLOAT --> vérifie si la valeur est bien un décimal
+
+
+*** Expressions régulières ***
+    - Une expression régulière (regex) est un filtre de vérification que l'on fabrique soit même
+    - La fonction qui permet de tester une regex sur une chaîne de texte est la fonction preg_match(x, y) --> x = regex, y = chaîne de texte à tester.
+
+    - Écriture d'une regex :
+        * Toutes les regex ont un délimiteur de début et de fin. Ex : '#chat#'
+        * paramètre "i" = insensible à la casse. Ex : #Chat#i
+        * | = ou. Ex : '#chat|chien#' (recherche chat ou chien)
+        * ^ = contrainte de début. Ex : '#^chat#' (Fonctionne seulement si la phrase commence par chat)
+        * $ = contrainte de fin. Ex : '#chat$#' (Fonctionne seulement si la phrase termine par chat)
+
+        * Si la contrainte de début et la contrainte de fin sont utilisée ensemble, la chaine de texte ne pourra contenir que ce que contient la regex. Ex : '#^chat$#' (Fonctionne seulement si la phrase est "chat" )
+
+        * classe de caractères : une classe de caractères est une liste des caractères autorisés à un endroit précis pour un seul caractère. Ex : '#b[ai]lle#' (trouvera 'bille' et 'balle' mais ne trouvera pas 'bulle' ou autre.)
+            - on peut utiliser des intervales de classes pour éviter de devoir lister les éléments redondants. Ex : '#b[a-z]lle#' (Fonctionnera pour n'importe quel mot commençant par un 'b', suivi d'une lettre quelquonque, suivi de 'lle')
+                * [a-z]
+                * [a-t]
+                * [A-Z]
+                * [0-9]
+                * [a-f0-9]
+                * . = tous les caractères existants
+                * il est possible d'indiquer l'inverse, par exemple tous les caractères sauf les lettres de a à z : '#b[^a-z]lle#' (fonctionne avec 'b@lle', 'b8lle', etc.. mais pas avec 'bille', 'balle', etc..)
+
+        * quantificateur : permet de spécifier qu'un élément est répété plusieurs fois. Ex :
+        '#b[ai]{2}lle#' (fonctionnera avec 'baalle', 'bialle', 'biille', etc.. mais pas avec 'balle', 'baaalle', etc..).
+        Un quantificateur est rataché à l'élément situé juste avant lui.
+            - {3} = quantificateur pour répéter obligatoirement 3 fois.
+            - {2,6} = quantificateur de 2 à 6 fois.
+            - {2,} = quantificateur de 2 à l'infinie de fois.
+            - {0,5} = quantificateur de 0 à 5 fois (et donc optionnel car peut ne pas être présent)
+
+            - Raccourcis de quantificateurs :
+                * {0,1} peut s'écrire avec un '?'
+                * {1,} peut s'écrire avec un '+'
+                * {0,} peut s'écrire avec un '*'
+        * Métacaractères à échapper si on veux les utiliser dans la recherche:
+            - # ! ^ $ ( ) [ ] { } ? + * . \ | -
+
+        * Classes abrégée :
+            - [0-9]                 ---> \d
+            - [^0-9]                ---> \D
+            - [a-zA-Z0-9_]          ---> \w
+            - [^a-zA-Z0-9_]         ---> \W
+            - tabulation            ---> \t
+            - espaces vides         ---> \s
+            - non espaces vides     ---> \S
+            - .                     ---> tous les caractères
+
+*** SQL en PHP avec PDO ***
+    - Pour que PHP puisse se connecter à la base de données, on utilise le code suivant :
+
+    // PHP Data Object
+    // mysql:host=localhost;dbname=wf3; = DSN (infos de connexion)
+    // charset=utf8 = encodage (optionnel mais recommandé)
+
+    try{
+        $bdd = new PDO('mysql:host=localhost;dbname=wf3;charset=utf8', 'root', 'azerty');
+    } catch(Exception $e){
+        die('Erreur : ' . $e->getMessage());
+    }
+
+    - Le try catch permet de capturer une éventuelle erreur pouvant arriver lors de la tentative de connexion et de l'afficher sans danger (sans infos sensibles comme le mdp). Le die() permet de stopper le chargement de la page pour éviter de causer d'autres erreurs vu que la connexion à la bdd n'a pas fonctionné.
+
+    - Pour faire une requête en bdd il y a deux possibilitées :
+        * Requête directe (query) Ex :
+            $response = $bdd->query('SELECT * FROM fruits');
+        * Requête préparée. Ex :
+            $response = $bdd->prepare('SELECT * FROM fruits WHERE color = ?')
+            $response->execute(array(
+                $_GET['color']
+            ));
+    - On ne concatène JAMAIS de variable dans une requête SQL. On utilise les requêtes préparées qui sont complètement sécurisées contre les injections SQL, contrairement à query
+
+    - Les requête préparée peuvent se faire de 3 façons différentes :
+        * Façon 1 : liaison des valeurs avec des "?" et le execute :
+            $response = $bdd->prepare('SELECT * FROM fruits WHERE color = ? AND origin = ?')
+            $response->execute(array(
+                $_GET['color'],     // doit être en premier car correspond au premier '?'
+                $_GET['origin']
+            ));
+        * Façon 2 : liaison des valeurs avec des marqueurs nominatifs et le execute :
+            $response = $bdd->prepare('SELECT * FROM fruits WHERE color = :color AND origin = :origin')
+            $response->execute(array(
+                $_GET['color'],     // ordre sans importance vu que les marqueur sont nommés
+                $_GET['origin']
+            ));
+        * Façon 3 : liaison des valeurs avec des marqueurs nominatifs et des "bindvalue" :
+            $response = $bdd->prepare('SELECT * FROM fruits WHERE color = :color AND origin = :origin')
+            $response->bindValue('color', $_GET['color']);
+            $response->bindValue('origin', $_GET['origin']);
+            $response->execute();   // rien dans execute car déjà fait avec des "bindvalue"
+
+    - La variable response contient les résultats de la requête sous forme brute, non exploitable pour le moment, il faut donc utiliser fetch ou fetchAll pour les transformer en tableaux PHP.
+
+    - fetch() permet de récupérer uniquement le premier résultat de la requête (à utiliser si on selectionne un seul élément)
+        $response = $bdd->query('SELECT * FROM fruits'); // requête selection de tous les fruits
+        $fruit = $response->fetch();   // Permet de récupérer le premier fruit uniquement
+
+    - fetchAll() permet de récupérer tous les résultats dans un tableau bi-dimensionnel
+        $response = $bdd->query('SELECT * FROM fruits'); // requête selection de tous les fruits
+        $fruit = $response->fetchAll();   // Permet de récupérer tous les fruits
+
+    - fetch() et fetchAll() produisent des tableaux PHP associatifs et numérotés en même temps, sauf si on précise un seul type entre parenthèse :
+        * fetchAll(PDO::FETCH_NUM) --> Converti les données en tableau numéroté
+        * fetchAll(PDO::FETCH_ASSOC) --> Converti les données en tableau associatif
+        * fetchAll(PDO::FETCH_BOTH) --> Converti les données en tableau associatif et numéroté (comportement déjà par défaut)
+
+    - en cas d'erreurs SQL, elles ne seront pas forcément lues. Pour les afficher, il suffit d'ajouter cette ligne après le try catch :
+        * $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    - $response->rowCount(); --> renvoi le nombre d'éléments dans la bdd touchés par la dernière requête SQL.
+    - $bdd->lastInsertId(); --> renvoi l'id du dernier élément créé en BDD.
+    - $bdd->beginTransaction(); --> crée une transaction SQL
+    - $bdd->commit(); --> termine une transaction SQL
+    - $bdd->rollBack(); --> annule la transaction SQL
+
+
+*** PASSWORDS ***
+
+    - Les mots de passes ne sont JAMAIS stockés en clair dans la BDD
+    - Dans la base de données, on stockera toujours l'empreinte (hash) d'un mot de passe. L'algorithme actuel le plus sécurisé est le BCRYPT, utilisable avec les fonctions password_hash() et password_verify().
+
+    - Pour calculer une empreinte : 
+        * $hash = password_hash('azerty', PASSWORD_BCRYPT);
+        * Possible d'augmenter le "coût cryptographique" (x2 à chaque incrémentation du coût) :
+            password_hash('azerty', PASSWORD_BCRYPT, array('cost' => 10));  // 10 = par défaut, environs 1/10 de seconde sur un ordinateur de bureau classique
+    - Pour vérifier si un mot de passe correspond bien à une empreinte :
+        * password_verify('azerty', $hash); // retourne true si le mot de passe est le bon, sinon false

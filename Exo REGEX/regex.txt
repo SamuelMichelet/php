@@ -1,0 +1,23 @@
+Exercice sur les expressions régulières. Les réponses possibles sont soit TRUE, soit FALSE
+
+"Le chat est dans l'arbre"				#chat#					Résultat: vrai
+"L'arbre n'est pas sur le chat"			#chien#					Résultat: faux
+"Le chien mange des croquettes"			#Chien#					Résultat: faux
+"La pomme est rouge"					#POMME#i				Résultat: vrai
+"La banane est jaune"					#banane|orange#			Résultat: vrai
+"Le chat est dans l'arbre"				#^chat#					Résultat: faux
+"L'arbre n'est pas sur le chat"			#chat$#					Résultat: vrai
+"Le chien mange des croquettes!"		#croquettes$#			Résultat: faux
+"La pomme et la poire sont des fruits"	#po[ufi]re#				Résultat: vrai
+"La pomme est rouge"					#[aeiouy]$#				Résultat: vrai
+"La banane est jaune"					#^[le]$#i				Résultat: faux
+"Le chat est dans l'arbre 4"			#^[0-9]#				Résultat: faux
+"L'arbre n'est pas sur le chat"			#[A-Z0-9]$#				Résultat: faux
+"Le chien mange des croquettes"			#[^a-z]#i				Résultat: vrai
+"La pomme est rouge"					#z?#					Résultat: vrai
+"La banane est jaune"					#[na]+#					Résultat: vrai
+"Le chat est dans l'arbre"				#^[a-z0-9]{0,50}$#i		Résultat: faux
+"1480"									#[0-9]{3}$#				Résultat: vrai
+"45T140"								#^[0-9]{3}#				Résultat: faux
+"blablablabla"							#^(bla){4}$#			Résultat: vrai
+"La pomme et la poire sont des fruits"	#^.+$#					Résultat: vrai
