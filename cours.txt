@@ -487,3 +487,97 @@ echo $userInfos['city'];    // Affiche "Autun"
             password_hash('azerty', PASSWORD_BCRYPT, array('cost' => 10));  // 10 = par défaut, environs 1/10 de seconde sur un ordinateur de bureau classique
     - Pour vérifier si un mot de passe correspond bien à une empreinte :
         * password_verify('azerty', $hash); // retourne true si le mot de passe est le bon, sinon false
+
+
+*** Configuration serveur Apache ***
+
+    - Il est possible d'appliquer des règles à certains dossier du serveur web grâce à des fichiers .htaccess
+    - Les règles d'un htaccess s'appliquent au dossier qui le contient et aux sous-dossiers de ce dossier.
+
+    - deny from all --> blocage de l'accès au dossier pour tous le monde
+    - deny from xxx.xxx.xxx.xxx --> blocage de l'accès au dossier pour une adresse IP précise
+    - allow from all --> permet l'accès au dossier à tous le monde
+    - allow from xxx.xxx.xxx.xxx --> permet l'accès au dossier à une adresse IP précise
+    - changer la page d'erreur 404 par défaut par une autre créée par nous même :
+        * ErrorDocument 404 /php/404.php
+    - changer le fichier chargé par défaut dans un dossier :
+        * DirectoryIndex accueil.php
+    - Empêcher listing dossier (important pour la sécurité !):
+        * Options -Indexes
+    - commentaires : # ceci est un commentaire
+    - appliquer des règles à un fichier uniquement :
+        <Files functions.php>
+        deny from all
+        </Files>
+
+
+*** Lecture/écriture dans un fichier ***
+
+    - Ouverture d'un fichier avec PHP : fopen('exemple.txt', 'x');
+        * Modes d'ouvertures (à la place de x):
+            - r = lecture seule (read)
+            - a = lecture seule + création fichier si inexistant
+            - r+ = lecture + écriture
+            - a+ = lecture + écriture + création fichier si inexistant
+            - w = écriture seul + reset du fichier + création fichier si inexistant
+            - w+ = lecture + écriture + reset du fichier + création fichier si inexistant
+    - Fermeture de la connexion au fichier : fclose($file);
+    - Lire des caractères dans le fichier :
+        * fread($file, 10); --> récupère les 10 premières caractères
+        * si une autre action est effectuée après la lecture, elle sera faite là où le curseur est resté.
+    - Repositionner le curseur où on veut dans le fichier :
+        * fseek($file, x); --> x = numéro de l'emplacement. 0 remet au tout début, 1 après le premier caractères, etc..
+        * en mode a et a+ l'écriture se fera obligatoirement à la fin du fichier
+    - Écriture dans un fichier : fwrite($file, 'Nouveau texte'); --> écrit par dessus l'ancien contenu.
+
+    - Fonctions utiles sur fichiers :
+        * unlink('file.txt'); --> supprimer le fichier file.txt
+        * rmdir('img'); --> supprime le dossier img
+        * mkdir('img'); --> crée le dossier img
+        * file_exists('file.txt'); --> retourne true si le fichier existe bien, sinon false
+        * rename('file.txt', 'php/file2.txt'); --> renomme et/ou déplace un fichier
+        * chmod('file.txt', '0777'); --> change les droits d'actions sur un fichier (0777 --> tous les droits pour tous le monde)
+        * filemtime('file.txt'); --> retourne le timestamp de la date de la dernière modif du fichier
+        * file_get_contents('file.txt'); --> récupère tout le contenu d'un fichier (équivalent d'un fopen, un fread et un fclose en même temps)
+        * file_put_contents('file.txt', 'Nouveau texte'); --> Vide le fichier et écrit le nouveau contenu dedans (équivalent de fopen, fwrite et fclose en même temps)
+
+
+*** UPLOAD de fichier ***
+
+    - Pour qu'un formulaire HTML puisse envoyer des fichiers, il faut mettre l'attribut enctype :
+        <form action="index.php" method="POST" enctype="multipart/form-data">
+            <input type="file" name="myFile">
+            <input type="submit">
+        </form>
+    - Limitation de la taille de tous les inputs files d'un formulaire en rajoutant un champ hidden :
+        <input type="hidden" name="MAX_FILE_SIZE" value="2000000">
+    - Dans $_FILES on retrouve :
+        * name --> nom du fichier tel qu'il a été envoyé
+        * type --> nature du fichier tirée depuis l'extension (PAS SECURISÉ !  car on peut changer l'extension sans problème)
+        * tmp_name --> emplacement et nom temporaire du fichier envoyé sur le serveur
+        * size --> taille du fichier en octet
+        * error --> code d'erreur en fonction de la situation. Valeurs possibles :
+            - 0 = aucune erreur, fichier bien envoyé
+            - 1 = taille du fichier supérieur à 'upload_max_filesize' dans php.ini
+            - 2 = taille du fichier est supérieur à 'max_file_size' dans le formulaire html
+            - 3 = fichier partiellement reçu par le serveur
+            - 4 = aucun fichier envoyé
+            - 6 = dossier temporaire manquant
+            - 7 = échec écriture du fichier côté serveur
+            - 8 = envoi du fichier coupé par une extension php
+    - Si l'envoi d'un gros fichier provoque une erreur PHP de type "Warning: POST Content-Length", ça signifie que le fichier dépasse la taille maximum des données POST paramétrée ('post_max_size' dans php.ini)
+    - Récupération du vrai type MIME d'un fichier envoyé :
+        * finfo_file(finfo_open(FILEINFO_MIME_TYPE), $_FILES['myImage']['tmp_name'])
+    - On ne garde jamais le nom d'origine d'un fichier pour éviter l'injection dans le nom du fichier directement, il faut toujours en recréer un de façon aléatoire ou autre.
+    - Sauvegarder le fichier :
+        * move_uploaded_file($_FILES['myImage']['tmp_name'], 'images/fichier.jpg');
+
+*** Nouveautés PHP 7 ***
+
+    - php7 25% à 70% plus rapide que php5
+    - ajout opérateur <=> pour tester une égalité
+    - ajout opérateur ?? pour simplifier l'utilisation d'une variable qui peut ne pas exister.
+    - Possible de forcer une fonction à retourner un type de variable forcé :
+        function double($n): int{
+            return $n*2;
+        }
